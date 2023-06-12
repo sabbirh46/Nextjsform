@@ -3,7 +3,7 @@ import React from "react";
 import { Dropdown, Button, DropdownItem, cn } from 'rizzui';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
-import { Text, Textarea,  FileInput, Checkbox, Radio  } from 'rizzui';
+import { Text, Textarea,  FileInput, Checkbox, Radio, NativeSelect  } from 'rizzui';
 import { Input } from 'rizzui';
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,6 +13,7 @@ import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 const validationSchema = z
   .object({
     username: z.string().min(1, { message: "Username is required" }),
+    select: z.string().min(1, { message: "Country is required" }),
     about: z.string().min(5, { message: " About is required" }),
     files: z.any().refine(val => val.length > 0,{ message: " File is required" } ),
 
@@ -203,47 +204,22 @@ export default function Home() {
           </div>
 
           <div className="sm:col-span-3">
-            <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
-              Country
-            </label>
+           
             <div className="mt-2">
-            <Dropdown
-            trigger={
-                <Button className=" flex w-auto" variant="outline">
-                    United states <ChevronDownIcon className="ml-2 w-5" />
-                </Button>
-            }
-            dropdownClassName="w-48 mt-4"
-        >
-            <DropdownItem className="mt-3 px-5 py-2" activeClassName="bg-gray-100">
-                {({ active }) => (
-                    <span className={cn('text-gray-600', active && '!text-gray-900')}>
-                        Account Settings
-                    </span>
-                )}
-            </DropdownItem>
-            <DropdownItem className="px-5 py-2" activeClassName="bg-gray-100">
-                {({ active }) => (
-                    <span className={cn('text-gray-600', active && '!text-gray-900')}>
-                        Support
-                    </span>
-                )}
-            </DropdownItem>
-            <DropdownItem className="px-5 py-2" activeClassName="bg-gray-100">
-                {({ active }) => (
-                    <span className={cn('text-gray-600', active && '!text-gray-900')}>
-                        License
-                    </span>
-                )}
-            </DropdownItem>
-            <DropdownItem className="mb-3 px-5 py-2" activeClassName="bg-gray-100">
-                {({ active }) => (
-                    <span className={cn('text-gray-600', active && '!text-gray-900')}>
-                        Sign Out
-                    </span>
-                )}
-            </DropdownItem>
-        </Dropdown>
+            <NativeSelect
+            id="select"
+            label="Country"
+            size="lg"
+            options={['United States', 'Canada', 'Mexico']}
+            {...register("select")}
+        />
+
+                {errors.select && (
+                    <p className="text-xs italic text-red-500 mt-2">
+                       {errors.select?.message}
+                    </p>
+                        )}
+
             </div>
           </div>
 
