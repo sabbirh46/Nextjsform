@@ -72,16 +72,16 @@ export default function Home() {
                   label="Username"
                   id="username"
                   autoComplete="username"
-                  className={`block flex-1  ${
-                    errors.username && "border-red-500"
+                  className={`block flex-1   ${
+                    errors.username && " border-red-light"
                   }`}
                   
                   {...register("username")}
                 />
                  {errors.username && (
-            <p className="text-xs italic text-red-500 mt-2">
+            <Text className="text-xs italic text-red-light mt-2">
               {errors.username?.message}
-            </p>
+            </Text>
           )}
               </div>
             </div>
@@ -101,7 +101,7 @@ export default function Home() {
               />
 
            {errors.about && (
-            <p className="text-xs italic text-red-500 mt-2">
+            <p className="text-xs italic text-red-light mt-2">
               {errors.about?.message}
             </p>
           )}
@@ -142,7 +142,7 @@ export default function Home() {
                     />
                  
                    {errors.files && (
-                    <p className="text-xs italic text-red-500 mt-2">
+                    <p className="text-xs italic text-red-light mt-2">
                        {errors.files?.message}
                     </p>
                         )}
@@ -215,7 +215,7 @@ export default function Home() {
         />
 
                 {errors.select && (
-                    <p className="text-xs italic text-red-500 mt-2">
+                    <p className="text-xs italic text-red-light mt-2">
                        {errors.select?.message}
                     </p>
                         )}
@@ -298,7 +298,7 @@ export default function Home() {
                 {...register("check")}
                 />
                   {errors.check && (
-            <p className="text-xs italic text-red-500 mt-2">
+            <p className="text-xs italic text-red-light mt-2">
               {errors.check?.message}
             </p>
           )}
@@ -355,12 +355,7 @@ export default function Home() {
     <Button color="warning">Cancel</Button>
     <Button  type="submit" color="primary">Save</Button>
 
-    <button
-          type="submit"
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Save
-        </button>
+   
     </div>
    
   </form>
