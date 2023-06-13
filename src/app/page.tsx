@@ -12,10 +12,10 @@ import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 
 const validationSchema = z
   .object({
-    username: z.string().min(1, { message: "Username is required" }),
-    select: z.string().min(1, { message: "Country is required" }),
-    about: z.string().min(5, { message: " About is required" }),
-    files: z.any().refine(val => val.length > 0,{ message: " File is required" } ),
+    username: z.string().min(1),
+    select: z.string().min(1),
+    about: z.string().min(5),
+    files: z.any().refine(val => val.length > 0 ),
 
     email: z.string().min(1, { message: "Email is required" }).email({
       message: "Must be a valid email",
@@ -50,7 +50,7 @@ export default function Home() {
   return (
 
    
-    <>
+    <div className="mx-auto max-w-2xl my-[100px]">
     
     <form onSubmit={handleSubmit(onSubmit)}>
        
@@ -70,19 +70,15 @@ export default function Home() {
                 <Input
                   type="text"
                   label="Username"
+                  labelClassName="block text-sm font-medium leading-6 text-gray-900 "
+                  inputClassName="shadow-sm "
                   id="username"
-                  autoComplete="username"
-                  className={`block flex-1   ${
-                    errors.username && " border-red-light"
-                  }`}
+                 // autoComplete="username"
+                  error = {errors.username && "Username is required" }
                   
                   {...register("username")}
                 />
-                 {errors.username && (
-            <Text className="text-xs italic text-red-light mt-2">
-              {errors.username?.message}
-            </Text>
-          )}
+                
               </div>
             </div>
           </div>
@@ -91,20 +87,18 @@ export default function Home() {
             
             <div className="mt-2">
               <Textarea
+               labelClassName="block text-sm font-medium leading-6 text-gray-900 "
+               className="shadow-sm "
                  label="About"
                  id="about"
-                 className={` block   ${
-                  errors.about && "border-red-500"
-                } w-full`}
-
+                 //className={` block   ${
+                 // errors.about && "border-red-500"
+                //}shadow-sm `}
+                error = {errors.username && "About is required" }
                 {...register("about")}
               />
 
-           {errors.about && (
-            <p className="text-xs italic text-red-light mt-2">
-              {errors.about?.message}
-            </p>
-          )}
+           
             </div>
             <Text className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</Text>
           </div>
@@ -116,8 +110,8 @@ export default function Home() {
             <div className="mt-2 flex items-center gap-x-3">
               { <UserCircleIcon className="h-12 w-12 text-gray-300" aria-hidden="true" /> }
               <Button
-                type="button"
-                className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                size="sm"
+                className="rounded-md bg-white px-2.5 py-1.5  text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
               >
                 Change
               </Button>
@@ -135,18 +129,15 @@ export default function Home() {
                  
                     
                     <FileInput id="files" label="Upload File" 
-                    className={`   ${
-                      errors.about && "border-red-500"
-                    } `}
+                    labelClassName="block text-sm font-medium leading-6 text-gray-900 "
+                    inputClassName="shadow-sm "
+                    //error="This is error message!"
+                    error = {errors.files && "File is required" }
                     {...register("files")}
                     />
-                 
-                   {errors.files && (
-                    <p className="text-xs italic text-red-light mt-2">
-                       {errors.files?.message}
-                    </p>
-                        )}
                   
+                  
+                 
                 </div>
                 <Text className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</Text>
               </div>
@@ -165,6 +156,8 @@ export default function Home() {
             <div className="mt-2">
 
               <Input
+              labelClassName="block text-sm font-medium leading-6 text-gray-900 "
+              inputClassName="shadow-sm "
                 label="First name"
                 type="text"
                 name="first-name"
@@ -179,6 +172,8 @@ export default function Home() {
             
             <div className="mt-2">
               <Input
+              labelClassName="block text-sm font-medium leading-6 text-gray-900 "
+              inputClassName="shadow-sm "
                label="last name"
                 type="text"
                 name="last-name"
@@ -193,6 +188,8 @@ export default function Home() {
             
             <div className="mt-2">
               <Input
+              labelClassName="block text-sm font-medium leading-6 text-gray-900 "
+              inputClassName="shadow-sm "
               label="Email address"
                 id="email"
                 name="email"
@@ -207,18 +204,17 @@ export default function Home() {
            
             <div className="mt-2">
             <NativeSelect
+            labelClassName="block text-sm font-medium leading-6 text-gray-900 "
+            className="shadow-sm "
             id="select"
             label="Country"
             size="lg"
             options={['United States', 'Canada', 'Mexico']}
             {...register("select")}
+            error = {errors.select && "Country is required" }
         />
 
-                {errors.select && (
-                    <p className="text-xs italic text-red-light mt-2">
-                       {errors.select?.message}
-                    </p>
-                        )}
+               
 
             </div>
           </div>
@@ -227,6 +223,8 @@ export default function Home() {
             
             <div className="mt-2">
               <Input
+              labelClassName="block text-sm font-medium leading-6 text-gray-900 "
+              inputClassName="shadow-sm "
                 label="Street address"
                 type="text"
                 name="street-address"
@@ -241,6 +239,8 @@ export default function Home() {
            
             <div className="mt-2">
               <Input
+              labelClassName="block text-sm font-medium leading-6 text-gray-900 "
+              inputClassName="shadow-sm "
               label=" City "
                 type="text"
                 name="city"
@@ -255,6 +255,8 @@ export default function Home() {
            
             <div className="mt-2">
               <Input
+              labelClassName="block text-sm font-medium leading-6 text-gray-900 "
+              inputClassName="shadow-sm "
               label="State / Province"
                 type="text"
                 name="region"
@@ -269,6 +271,8 @@ export default function Home() {
             
             <div className="mt-2">
               <Input
+              labelClassName="block text-sm font-medium leading-6 text-gray-900 "
+              inputClassName="shadow-sm "
               label="ZIP / Postal code"
                 type="text"
                 name="postal-code"
@@ -291,37 +295,34 @@ export default function Home() {
           <fieldset>
             <legend className="text-sm font-semibold leading-6 text-gray-900">By Email</legend>
             <div className="mt-6 space-y-6">
-              <div className="relative flex gap-x-3">
+              <div className=" gap-x-3">
                 <div className="flex h-6 items-center">
                 <Checkbox label="Comments" 
                 id="check"
                 {...register("check")}
+                error = {errors.check && "Checking is required" }
                 />
-                  {errors.check && (
-            <p className="text-xs italic text-red-light mt-2">
-              {errors.check?.message}
-            </p>
-          )}
+                 
                 </div>
-                <div className="text-sm leading-6">
+                <div className="text-sm leading-6 ml-[25px]">
                   
                   <Text className="text-gray-500">Get notified when someones posts a comment on a posting.</Text>
                 </div>
               </div>
-              <div className="relative flex gap-x-3">
+              <div className=" gap-x-3">
                 <div className="flex h-6 items-center">
                 <Checkbox label="Candidates" />
                 </div>
-                <div className="text-sm leading-6">
+                <div className="text-sm leading-6 ml-[25px]">
                  
                   <Text className="text-gray-500">Get notified when a candidate applies for a job.</Text>
                 </div>
               </div>
-              <div className="relative flex gap-x-3">
+              <div className=" gap-x-3">
                 <div className="flex h-6 items-center">
                 <Checkbox label="Offers" />
                 </div>
-                <div className="text-sm leading-6">
+                <div className="text-sm leading-6 ml-[25px]">
                   
                   <Text className="text-gray-500">Get notified when a candidate accepts or rejects an offer.</Text>
                 </div>
@@ -352,14 +353,14 @@ export default function Home() {
     </div>
 
     <div className="mt-6 flex items-center justify-end gap-x-6">
-    <Button color="warning">Cancel</Button>
+    <Button  variant="text">Cancel</Button>
     <Button  type="submit" color="primary">Save</Button>
 
    
     </div>
    
   </form>
-  </> 
+  </div> 
     
   );
 };
