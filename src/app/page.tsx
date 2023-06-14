@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React , { FormEvent, useState } from "react";
 import { Dropdown, Button, DropdownItem, cn } from 'rizzui';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
@@ -10,49 +10,65 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 
-const validationSchema = z
+const loginInfoSchema = z
   .object({
     username: z.string().min(1),
     select: z.string().min(1),
+    firstname: z.string().min(1),
+    lastname: z.string().min(1),
+    streetaddress: z.string().min(1),
+    city: z.string().min(1),
+    region: z.string().min(1),
+    postalcode: z.string().min(1),
     about: z.string().min(5),
     files: z.any().refine(val => val.length > 0 ),
-
+    check: z.literal(true, {
+      errorMap: () => ({ message: "You must accept Terms and Conditions" }),
+    }),
     email: z.string().min(1, { message: "Email is required" }).email({
       message: "Must be a valid email",
     }),
-    password: z
-      .string()
-      .min(6, { message: "Password must be atleast 6 characters" }),
-    confirmPassword: z
-      .string()
-      .min(1, { message: "Confirm Password is required" }),
-    check: z.literal(true, {
-      errorMap: () => ({ message: " checking is required" }),
-    }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ["confirmPassword"],
-    message: "Password don't match",
+    
   });
+  
+  type SignInType = z.infer<typeof loginInfoSchema>;
 
-type ValidationSchema = z.infer<typeof validationSchema>;
-export default function Home() {
+export default function Home () {
 
-  const {
+ 
+
+  /* const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
+  }); */
+
+  //const onSubmit: SubmitHandler<ValidationSchema> = (data) => console.log(data);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInType>({
+    resolver: zodResolver(loginInfoSchema),
   });
 
-  const onSubmit: SubmitHandler<ValidationSchema> = (data) => console.log(data);
+  // TO-DO: Send data to API onSubmit.
+  function handleFormSubmit(data: SignInType) {
+    console.log('Submitted data', data);
+   
+  }
+  
+  
+  
   return (
 
    
     <div className="mx-auto max-w-2xl my-[100px]">
     
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form noValidate onSubmit={handleSubmit((d) => handleFormSubmit(d))}>
        
     <div className="space-y-12">
       <div className="border-b border-gray-900/10 pb-12">
@@ -160,10 +176,12 @@ export default function Home() {
               inputClassName="shadow-sm "
                 label="First name"
                 type="text"
-                name="first-name"
-                id="first-name"
+               
+                id="firstname"
                 autoComplete="given-name"
                 className="block w-full"
+                error = {errors.firstname && "Firstname is required" }
+                {...register("firstname")}
               />
             </div>
           </div>
@@ -176,10 +194,12 @@ export default function Home() {
               inputClassName="shadow-sm "
                label="last name"
                 type="text"
-                name="last-name"
-                id="last-name"
+                
+                id="lastname"
                 autoComplete="family-name"
                 className="block w-full"
+                error = {errors.lastname && "Lastname is required" }
+                {...register("lastname")}
               />
             </div>
           </div>
@@ -192,10 +212,12 @@ export default function Home() {
               inputClassName="shadow-sm "
               label="Email address"
                 id="email"
-                name="email"
+                
                 type="email"
                 autoComplete="email"
                 className="block w-full "
+                error = {errors.email && "Email is required" }
+                {...register("email")}
               />
             </div>
           </div>
@@ -227,10 +249,12 @@ export default function Home() {
               inputClassName="shadow-sm "
                 label="Street address"
                 type="text"
-                name="street-address"
-                id="street-address"
+                
+                id="streetaddress"
                 autoComplete="street-address"
                 className="block w-full "
+                error = {errors.streetaddress && "Street address is required" }
+                {...register("streetaddress")}
               />
             </div>
           </div>
@@ -243,10 +267,12 @@ export default function Home() {
               inputClassName="shadow-sm "
               label=" City "
                 type="text"
-                name="city"
+                
                 id="city"
                 autoComplete="address-level2"
                 className="block w-full "
+                error = {errors.city && "City is required" }
+                {...register("city")}
               />
             </div>
           </div>
@@ -259,10 +285,12 @@ export default function Home() {
               inputClassName="shadow-sm "
               label="State / Province"
                 type="text"
-                name="region"
+               
                 id="region"
                 autoComplete="address-level1"
                 className="block w-full "
+                error = {errors.region && "State is required" }
+                {...register("region")}
               />
             </div>
           </div>
@@ -275,10 +303,12 @@ export default function Home() {
               inputClassName="shadow-sm "
               label="ZIP / Postal code"
                 type="text"
-                name="postal-code"
-                id="postal-code"
+                
+                id="postalcode"
                 autoComplete="postal-code"
                 className="block w-full "
+                error = {errors.postalcode && "ZIP is required" }
+                {...register("postalcode")}
               />
             </div>
           </div>
