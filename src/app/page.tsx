@@ -50,7 +50,7 @@ export default function Home () {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }, reset
   } = useForm<SignInType>({
     resolver: zodResolver(loginInfoSchema),
   });
@@ -58,9 +58,13 @@ export default function Home () {
   // TO-DO: Send data to API onSubmit.
   function handleFormSubmit(data: SignInType) {
     console.log('Submitted data', data);
+    reset();
    
   }
   
+  const handleCancel = () => {
+    reset(); // Reset the form inputs
+  };
   
   
   return (
@@ -383,8 +387,8 @@ export default function Home () {
     </div>
 
     <div className="mt-6 flex items-center justify-end gap-x-6">
-    <Button  variant="text">Cancel</Button>
-    <Button  type="submit" color="primary">Save</Button>
+    <Button  variant="text" onClick={handleCancel}>Cancel</Button>
+    <Button  type="submit" color="primary" >Save</Button>
 
    
     </div>
